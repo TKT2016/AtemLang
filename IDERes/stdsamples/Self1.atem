@@ -1,0 +1,13 @@
+package examples.stdsamples;
+require atem.lang.Core;
+
+var dynamic1 ={ name:"Tom" };
+
+function ShowName(self)
+{
+    println self.name;
+}
+ShowName(dynamic1);
+
+dynamic1.show = ShowName;
+dynamic1.show ();

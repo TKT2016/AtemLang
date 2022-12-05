@@ -1,0 +1,26 @@
+package examples.stdsamples;
+require atem.lang.Core;
+
+var emptys =[];
+
+var cars = ["Saab", "Volvo", "BMW"];
+println ( cars.get 0);
+
+cars.set  1 "Opel";
+println ( cars.get 1);
+
+println (cars.count ());
+
+foreach(var ele) in cars
+{
+    println ele
+};
+
+cars.add "DaZhong";
+println (cars.count ());
+
+foreach(var ele) in cars index (var index)
+{
+    println ("the "+index+" is "+ ele)
+};
+

@@ -1,0 +1,23 @@
+package examples.stdsamples;
+require atem.lang.Core;
+
+var time =16;
+
+if (time < 18) {
+    println  "Good day";
+}
+
+if (time < 10) {
+    println  "Good day";
+ } else {
+    println  "Good evening";
+ }
+
+ if (time < 10) {
+     println  "Good morning";
+  } else if (time < 18) {
+     println  "Good day";
+  } else {
+     println  "Good evening";
+  }
+

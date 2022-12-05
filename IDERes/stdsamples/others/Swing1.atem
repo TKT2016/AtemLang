@@ -1,0 +1,22 @@
+
+package examples.stdsamples.others;
+import java.lang;
+import javax.swing;
+import java.awt;
+
+       var JF =  JFrame.new ();
+        JF.setVisible true;
+        JF.setBounds.(500,500,500,500);
+        JF.setTitle "JFrame";
+        //关闭事件
+        JF.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        var  jlabel =  JLabel.new ("Test Label");
+
+        //容器
+        var container = JF.getContentPane();
+        //容器添加label
+        container.add(jlabel);
+        //文本居中
+        jlabel.setHorizontalAlignment(SwingConstants.CENTER);
+

@@ -1,0 +1,29 @@
+package examples.stdsamples;
+require atem.lang.Core;
+import java.lang;
+// show Hello
+println "Hello World! ";
+
+// function reference
+var println2 = System.out.println;
+
+// lambda
+var hello = { println2 "Hello:"+$1 +",Waclome to "+$2 };
+hello "Jack" 2088;
+
+// macro (define my for each)
+macro my_for_each (item) in (list) (body)
+{
+    var count = list.count();
+    var i=0;
+    while(i<count)
+    {
+        item = list.get.(i);
+        body();
+        i=i+1;
+    }
+}
+
+my_for_each (var item) in [1,3,5]{
+        println ("element = "+item);
+} ;

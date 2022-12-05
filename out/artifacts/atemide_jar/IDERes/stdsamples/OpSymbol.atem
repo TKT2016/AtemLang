@@ -1,0 +1,21 @@
+
+package examples.stdsamples;
+require atem.lang.Core;
+
+println (3+4 );
+println (3 -4 );
+println (3*4 );
+println (3 /4 );
+println (3.0 /4 );
+
+println (3> 4 );
+println (3>= 4 );
+println (3< 4 );
+println (3<= 4 );
+println (3 == 4 );
+println (3 != 4 );
+
+println ( true && false );
+println ( true || false );
+println ( !true );
+

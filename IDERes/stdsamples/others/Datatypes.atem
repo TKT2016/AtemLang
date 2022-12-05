@@ -1,0 +1,12 @@
+// Datatypes 数据类型
+package examples.stdsamples;
+require atem.lang.Core;
+
+println  true.getClass.() ;
+println false .getClass.();
+println  3.14.getClass.() ;
+println  1200.getClass.() ;
+println  "Hello World".getClass.() ;
+println  [10, 13, 55,  100].getClass.() ;
+println  [1:"A",2:"B"].getClass.() ;
+println  {name:"John", age:18, eyeColor:"blue"}.getClass.() ;

@@ -1,0 +1,87 @@
+.lineno {
+ -fx-background-color: #cccccc;
+}
+
+.styled-text-area{
+    -fx-background-color: #ffffff;
+}
+
+.styled-text-area .text{
+ -fx-fill: #000000;
+}
+
+.styled-text-area .text.keyword {
+    -fx-fill: #f82671;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .text.semicolon {
+    -fx-fill: #f82671;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .text.paren {
+    -fx-fill: #000022;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .text.bracket {
+    -fx-fill: #000011;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .text.brace {
+    -fx-fill: #000033;
+    -fx-font-weight: bold;
+}
+
+.styled-text-area .text.string {
+    -fx-fill: #17AF66;
+}
+/*
+.styled-text-area .text.todo {
+ 	-fx-fill: #15786EE;
+ 	-fx-font-weight: bold;
+}
+*/
+.styled-text-area .text.warn {
+  	-fx-fill: #2618D2;
+  	-fx-font-weight: bold;
+}
+
+.styled-text-area .text.comment {
+ 	-fx-fill: #59A869;
+}
+
+.styled-text-area .text.annotation {
+	-fx-fill: #2ABCDA;
+	-fx-font-weight: bold;
+}
+
+.styled-text-area .text.cast {
+	-fx-fill: #1FC3E2;
+}
+
+.styled-text-area .text.operation {
+  -fx-fill: #e17b20;
+}
+
+.styled-text-area .text.hex{
+  -fx-fill: #050505;
+}
+
+.styled-text-area .text.number{
+  -fx-fill: #7130E6;
+}
+
+.styled-text-area .text.method{
+  -fx-fill: #2FCAEA;
+}
+
+.paragraph-box:has-caret {
+   -fx-background-color: #E9E9EF;
+}
+
+.caret {
+   -fx-stroke: #f8f8f2;
+}

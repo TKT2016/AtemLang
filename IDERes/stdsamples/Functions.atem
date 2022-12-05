@@ -1,0 +1,34 @@
+// Function 函数
+package examples.stdsamples;
+require atem.lang.Core;
+require atem.lang.SimpleDialogs;
+
+function myFunction(name,job){
+    alert("Welcome " + name + ", the " + job);
+}
+myFunction "Harry Potter" "Wizard" ;
+
+function noReturn(a)
+{
+   if(a>100)
+   	return;
+  println a;
+}
+noReturn 10;
+
+function myFunction2(a,b)
+{
+  return a*b;
+}
+println ( myFunction2  3 4);
+println ( myFunction2.(3 ,4));
+
+function noArg( )
+{
+  println "noArg";
+}
+noArg ();
+noArg.();
+
+
+

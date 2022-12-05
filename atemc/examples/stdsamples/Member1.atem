@@ -1,0 +1,28 @@
+package examples.stdsamples;
+require atem.lang.Core;
+import java.lang;
+import javax.swing;
+
+var sys = System;
+println sys;
+
+var err = sys.err;
+println err;
+err.println "err println";
+
+var errshow = err.println;
+println errshow;
+errshow "errshow";
+
+var newFrame = JFrame.new;
+
+var frame1 = newFrame ();
+frame1.setBounds 600 600 300 200;
+frame1.setTitle "JFrame 1";
+frame1.setDefaultCloseOperation WindowConstants.HIDE_ON_CLOSE;
+frame1.setVisible true ;
+
+var frame2 = newFrame "JFrame 2";
+frame2.setBounds 300 300 300 300;
+frame2.setDefaultCloseOperation WindowConstants.EXIT_ON_CLOSE;
+frame2.setVisible true;

@@ -1,0 +1,24 @@
+package examples.stdsamples;
+import atem.lang;
+require atem.lang.Core;
+
+//定义一个类,包含属性name和age
+var d1 ={ name:"Tom" ,age:10 };
+//显示 d1的name
+println d1.name;
+//显示 d1的age
+println d1.age;
+//显示 d1的high,因为没有添加这个属性，所以返回undefined
+println d1.high;
+//添加一个新的属性，直接用赋值表达式
+d1.country="JiaLeBi";
+println d1.country;
+
+// 定义一个无属性的动态类
+var d2 = Dynamic.new ();
+println d2;
+d2.name = "Jan";
+println d2.name;
+
+
+

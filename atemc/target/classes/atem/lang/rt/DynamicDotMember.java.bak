@@ -1,0 +1,62 @@
+package atem.lang.rt;
+
+import atem.lang.Dynamic;
+
+public class DynamicDotMember extends  RTObject implements DotMember
+{
+    public final Dynamic dynamic;
+    public final String name;
+
+    public DynamicDotMember(Dynamic dynamic, String name)
+    {
+        this.dynamic =  dynamic;
+        this.name = name;
+    }
+
+    public Object getValue( )
+    {
+        return dynamic.prototype.__get(name);
+    }
+
+    public void setValue( Object value)
+    {
+        dynamic.prototype.__set(name,value);
+    }
+
+    public Object invoke( Object[] args)  throws Exception
+    {
+        Object member = getValue();
+        if(member.equals(Undefined.undefined))
+        {
+            throw new InterpreterError("没有成员"+name);
+        }
+        return  RTCore.invoke(member,args);
+    }
+
+    /* 根据参数个数判断能否运行,如果能，则运行 */
+    public TryInvokeResult tryInvoke(Object[] args)  throws Exception
+    {
+        Object member = getValue();
+        if(member.equals(Undefined.undefined))
+        {
+            throw new InterpreterError("没有成员"+name);
+        }
+        return  RTCore.tryInvoke(member,args);
+    }
+
+    /*
+    public  boolean instanceofx(Object obj)
+    {
+        if(obj instanceof TypeLiteral)
+        {
+            TypeLiteral typeLiteral =(TypeLiteral) obj;
+        }
+        return false;
+    }*/
+
+    @Override
+    public String toString()
+    {
+        return "<DynamicMember:"+ dynamic +"."+name+">";
+    }
+}

@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Main-Class: AtemIDE.IDEStart
+Class-Path: jsr305-3.0.2.jar commons-cli-1.5.0.jar fxgl-core-17.1.jar st
+ orage-4.0.13.jar fxgl-gameplay-17.1.jar asm-analysis-9.4.jar javafx-fxm
+ l-17.0.2-win.jar fxgl-entity-17.1.jar j2objc-annotations-1.3.jar jackso
+ n-core-2.13.3.jar wellbehavedfx-0.3.3.jar javafx-media-17.0.2-win.jar j
+ avafx-media-17.0.2.jar ikonli-javafx-12.3.1.jar fxgl-scene-17.1.jar und
+ ofx-2.1.1.jar checker-compat-qual-2.5.5.jar javafx-web-17.0.2.jar forms
+ fx-core-11.5.0.jar failureaccess-1.0.1.jar ikonli-core-12.3.1.jar richt
+ extfx-0.10.9.jar util-4.0.13.jar javafx-controls-17.0.2.jar jna-5.10.0.
+ jar pty4j-0.12.7.jar slf4j-api-1.7.32.jar terminalfx-1.2.0.jar jna-plat
+ form-5.10.0.jar controlsfx-11.1.1.jar reactfx-2.0-M5.jar fxgl-io-17.1.j
+ ar jackson-annotations-2.13.3.jar ant-1.9.7.jar audio-4.0.13.jar javafx
+ -controls-17.0.2-win.jar asm-9.4.jar asm-util-9.4.jar error_prone_annot
+ ations-2.3.4.jar javafx-graphics-17.0.2.jar javafx-graphics-17.0.2-win.
+ jar javafx-fxml-17.0.2.jar jimfs-1.2.jar javafx-base-17.0.2-win.jar jac
+ kson-databind-2.13.3.jar flowless-0.6.9.jar kotlin-stdlib-1.5.32-modula
+ r.jar guava-30.1-android.jar listenablefuture-9999.0-empty-to-avoid-con
+ flict-with-guava.jar commons-lang3-3.9.jar javafx-web-17.0.2-win.jar bo
+ otstrapfx-core-0.4.0.jar fxgl-17.1.jar javafx-base-17.0.2.jar annotatio
+ ns-13.0.jar ant-launcher-1.9.7.jar lifecycle-4.0.13.jar kotlin-stdlib-c
+ ommon-1.5.32.jar commons-io-2.11.0.jar asm-tree-9.4.jar
+

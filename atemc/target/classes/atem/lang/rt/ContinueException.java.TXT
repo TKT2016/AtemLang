@@ -1,0 +1,5 @@
+package atem.interpreter.rt;
+
+public final class ContinueException extends Exception{
+
+}

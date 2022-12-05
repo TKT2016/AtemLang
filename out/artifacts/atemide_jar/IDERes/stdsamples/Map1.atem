@@ -1,0 +1,30 @@
+package examples.stdsamples;
+import atem.lang;
+require atem.lang.Core;
+
+/* 创建无默认值的map */
+var mapNoDefault =[ "A":100,"B":200 ];
+
+/* 创建有默认值的map */
+var map =[ "A":100,"B":200,default:-1];
+
+/* 创建空的map */
+var emptyMap = Map.new () ;
+
+println emptyMap;
+println ( emptyMap.count ());
+
+println ( map.count ());
+println  ( map.get "A");
+println  ( map.get "C");
+println (  mapNoDefault.get "C");
+
+var opfns=[
+"+":{$1+$2} ,
+"-":{$1-$2} ,
+"*":{$1*$2} ,
+default:{$1/$2}
+];
+
+println( opfns.get.("&&") 100 4 );
+

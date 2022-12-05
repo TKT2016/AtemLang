@@ -1,0 +1,30 @@
+package atemscript.compiler.symbols;
+import java.util.HashMap;
+
+/** 数组长度变量符号 */
+public class RArrayLengthVarSymbol extends BVarSymbol{
+    /** 数组长度字段名称固定的,是length */
+    public static final  String ArrayLengthName="length";
+
+    /** 符号缓存 */
+    private static HashMap<Object, RArrayLengthVarSymbol> cache = new HashMap<>();
+
+    private RArrayLengthVarSymbol(BArrayTypeSymbol ower)
+    {
+        super(ArrayLengthName,VarSymbolKind.arrayLength);
+        this.ownerType = ower;
+        this.varType =  RClassSymbolManager.intPrimitiveSymbol; //数组长度是整数类型
+        this.isStatic =false; //数组长度非静态
+        this.isPublic =true;  //数组长度可以公开访问
+        this.writable =false; //数组长度不可修改
+    }
+
+    /**  获取数组符号的变量符号*/
+    public static RArrayLengthVarSymbol getSymbol(BArrayTypeSymbol owner) {
+        if (cache.containsKey(owner))
+            return cache.get(owner);
+        RArrayLengthVarSymbol RArrayLengthVarSymbol = new RArrayLengthVarSymbol(owner);
+        cache.put(owner, RArrayLengthVarSymbol);
+        return RArrayLengthVarSymbol;
+    }
+}

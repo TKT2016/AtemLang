@@ -1,0 +1,22 @@
+
+package examples.stdsamples;
+require atem.lang.Core;
+
+ var lambda1 ={ println "Hello" };
+ lambda1 ();
+
+ var lambda2 ={ 990 };
+ println (lambda2 ());
+
+ var lambda3 ={ println $ };
+ lambda3 "HELLO";
+
+ var lambda4 ={ println $2 };
+ lambda4 "GOOD";
+
+ var lambda5 ={ println $a+$b };
+ lambda5 "A" "B";
+
+ var lambda6 ={ println $a+$c };
+ lambda6 "A" "B";
+

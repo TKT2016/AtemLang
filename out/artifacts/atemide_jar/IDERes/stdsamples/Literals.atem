@@ -1,0 +1,14 @@
+// Literals
+package examples.stdsamples;
+require atem.lang.Core;
+
+println true;
+println false;
+println 3.14;
+println 1200;
+println "Hello World";
+println  [10, 100, 13, 55,  100];
+println [1:"A",2:"B"];
+println {name:"John", age:18, eyeColor:"blue"};
+println null;
+

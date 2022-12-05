@@ -1,0 +1,56 @@
+package examples.stdsamples;
+require atem.lang.Core;
+import java.lang;
+
+try {
+    println "step1";
+     var ex1 = Exception.new "Test Throw Exception 1";
+     throw ex1;
+     println "step2";
+}
+catch
+{
+    println "catch Exception";
+}
+;
+
+try {
+    println "step1";
+     throw (Exception.new "Test Throw Exception 2");
+     println "step2";
+}
+catch (var e)
+{
+    println (e.getMessage());
+}
+;
+
+try {
+    println "step1";
+     throw ( Exception.new "Test Throw Exception 3");
+     println "step2";
+}
+catch (var e)
+{
+    println (e.getMessage());
+}
+finally
+{
+    println "finally ";
+}
+;
+
+try {
+    println "step1";
+     throw (Exception.new "Test Throw Exception 4");
+     println "step2";
+}
+catch
+{
+   println "catch Exception 4";
+}
+finally
+{
+    println "finally 2";
+}
+;

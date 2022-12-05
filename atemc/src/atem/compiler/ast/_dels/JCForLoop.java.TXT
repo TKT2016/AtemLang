@@ -1,0 +1,27 @@
+package atemscript.compiler.ast;
+
+import atemscript.compiler.symbols.SymbolScope;
+
+/** for循环 */
+public class JCForLoop extends JCStatement
+{
+    /** 初始化语句 */
+    public JCStatement init;
+    /** 条件表达式 */
+    public JCExpression cond;
+    /** 更新语句 */
+    public JCStatement step;
+    /** 循环体 */
+    public JCStatement body;
+    
+    @Override
+    public <D> void scan(TreeScanner<D> v, D arg) { v.visitForLoop(this, arg); }
+
+    @Override
+    public <D> JCTree translate(TreeTranslator<D> v, D arg) {
+        return v.translateForLoop(this, arg);
+    }
+
+    /** 作用域 */
+    public SymbolScope scope;
+}

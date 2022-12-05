@@ -1,0 +1,9 @@
+// VarDim 变量声明
+package examples.stdsamples;
+require atem.lang.Core;
+
+var a="Hello";
+println a;
+var b;
+println (b==null);
+

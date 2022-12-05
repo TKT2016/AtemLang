@@ -1,0 +1,12 @@
+package atem.compiler.ast;
+
+public class ContinueStatement extends JCStatement
+{
+    @Override
+    public <D> void scan(TreeScanner<D> v, D arg) { v.visitContinue(this, arg); }
+
+    @Override
+    public <D> JCTree translate(TreeTranslator<D> v, D arg) {
+        return v.translateContinue(this, arg);
+    }
+}

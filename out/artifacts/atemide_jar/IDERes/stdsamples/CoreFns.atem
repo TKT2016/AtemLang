@@ -1,0 +1,10 @@
+package examples.stdsamples;
+import java.lang;
+require atem.lang.Core;
+
+
+println (isInstanceof  "STRING"  String);
+println  (  "STRING".getClass ()  );
+println (isUndefined   "STRING"  );
+println (isNull    "STRING"  );
+println (isNotNull     "STRING"  );

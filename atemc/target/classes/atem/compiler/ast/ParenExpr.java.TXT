@@ -1,0 +1,33 @@
+/*package atem.compiler.ast;
+
+public class ParenExpr extends JCExpression
+{
+    public JCExpression[] items;
+    public ParenExpr(JCExpression[] items) {
+        this.items = items;
+    }
+
+    @Override
+    public <D> void scan(TreeScanner<D> v, D arg) { v.visitParenExpr(this, arg); }
+
+    @Override
+    public <D> JCTree translate(TreeTranslator<D> v, D arg) {
+        return v.translateParenExpr(this, arg);
+    }
+
+    public boolean isEmpty()
+    {
+        return items==null ||items.length==0;
+    }
+
+    @Override
+    public void setIsMacroCallArg(boolean isMacroCallArg)
+    {
+        this.propertys.isMacroCallArg =isMacroCallArg;
+        for(var item :items)
+        {
+            item.setIsMacroCallArg(isMacroCallArg);
+        }
+    }
+}
+*/

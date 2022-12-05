@@ -1,0 +1,5 @@
+{
+  "exampleFolder" : "IDERes/stdsamples/",
+  "compilerJarPath" : "IDERes/AtemCompiler_jar/AtemCompiler.jar",
+  "dlibPath" : "IDERes/dlibjar/"
+}

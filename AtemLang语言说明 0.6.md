@@ -1,13 +1,3 @@
-# AtemLang
-Atem Programming Language : Dynamic , Light , Functional On JVM .
-
-The Release Path is :  out\artifacts\atemide_jar\AtemIDE.jar
-
-![Atem IDE](ATEM IDE.png)
-
-
----
-
 
 
 # AtemLang编程语言说明
@@ -1062,3 +1052,4 @@ println d1.country;
 ```java  {.line-numbers}
 var d2 = Dynamic.new ();
 ```
+

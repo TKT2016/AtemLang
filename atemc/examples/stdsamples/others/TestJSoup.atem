@@ -1,0 +1,9 @@
+// Test JSoup
+package examples.stdsamples;
+require atem.lang.Core;
+import java.lang;
+import org.jsoup;
+
+var doc = Jsoup.connect.("http://www.baidu.com/").get.();
+var title = doc.title.();
+System.out.println(title);

@@ -1,0 +1,22 @@
+package atemscript.compiler.symbols;
+
+import java.util.ArrayList;
+
+public class AnySymbol extends BTypeSymbol{
+
+    public AnySymbol() {
+        super( "<any>",  false,true);
+    }
+
+    @Override
+    public BVarSymbol findField(String name)
+    {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Symbol> findMembers(String name)
+    {
+        return null;
+    }
+}

@@ -1,0 +1,11 @@
+
+package examples.stdsamples;
+require atem.lang.Core;
+
+var area = "Xi Jiang";
+var ch = area.charAt(6);
+println ch;
+
+var str= "A\bB\fC\nD\rF\tE\\G\'H\"I\0JKL";
+println str;
+println (str.length ());

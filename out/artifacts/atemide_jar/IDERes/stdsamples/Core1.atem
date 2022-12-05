@@ -1,0 +1,15 @@
+package examples.stdsamples;
+import java.lang;
+require atem.lang.Core;
+
+forloop (var i=0) {i<8} {i=i+1}{
+    println("i="+i);
+};
+
+forloop (var i=0) {i<8} {i=i+1}{
+    println("i="+i);
+    if(i==6)
+        break;
+};
+
+

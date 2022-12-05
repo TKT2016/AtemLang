@@ -1,0 +1,8 @@
+
+package examples.stdsamples.others;
+require atem.lang.Core;
+require atem.lang.SimpleDialogs;
+
+alert("Alert message");
+confirm("OK?");
+println ( prompt("input your name") );

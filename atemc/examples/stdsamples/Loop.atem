@@ -1,0 +1,19 @@
+package examples.stdsamples;
+require atem.lang.Core;
+
+var i=0;
+while (i < 10) {
+    println  ("number is " + i );
+    i=i+1;
+}
+
+var k=0;
+while ( k< 10) {
+    println  ("number k= " + k );
+    k=k+1;
+
+    if(k==5)
+        break;
+}
+
+
