@@ -1,4 +1,0 @@
-package atem.compiler.parse;
-
-public class ExprNotBinParser {
-}

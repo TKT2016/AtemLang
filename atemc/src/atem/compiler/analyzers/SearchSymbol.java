@@ -5,43 +5,13 @@ import atem.compiler.symbols.*;
 import atem.compiler.ast.*;
 import atem.compiler.tools.ListUtil;
 import atem.compiler.CompileContext;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SearchSymbol {
-
-    /* 根据词法类型查找符号 */
-   /* public static RClassSymbol getPrimitiveSymbol(TokenKind tokenKind)
-    {
-        switch (tokenKind) {
-            //case BOOLEAN:
-            case TRUE:
-            case FALSE:
-                return  RClassSymbolManager.booleanPrimitiveSymbol;
-            //case INT:
-            case INTLITERAL:
-                return RClassSymbolManager.intPrimitiveSymbol;
-            case FLOATLITERAL:
-                return RClassSymbolManager.floatSymbol;
-            //case VOID:
-            //    return RClassSymbolManager.voidPrimitiveSymbol;
-            case STRINGLITERAL:
-                return RClassSymbolManager.StringSymbol;
-            default:
-                throw new CompileError();
-        }
-    }*/
-
-    /* 查找JCPrimitiveTypeTree的类型符号 */
-  //  public static RClassSymbol findType(JCPrimitiveTypeTree jcPrimitiveTypeTree)
-  //  {
-  //      RClassSymbol classSymbol = getPrimitiveSymbol(jcPrimitiveTypeTree.kind);
-        /* 顺便给JCPrimitiveTypeTree的symbol赋值,减少工作量*/
-  //      jcPrimitiveTypeTree.symbol =classSymbol;
- //       return classSymbol;
- //   }
 
     /* 查找JCFieldAccess类型符号 */
     public static RClassSymbol findType(JCFieldAccess jcFieldAccess, CompileContext compileContext)
@@ -51,7 +21,8 @@ public class SearchSymbol {
         /*使用反射从类名称获取Class符号*/
         RClassSymbol classSymbol = RClassSymbolManager.forName(fullName,compileContext);
         if(classSymbol ==null) {
-            jcFieldAccess.log.error(jcFieldAccess.nameToken  , String.format("类型'%s'不存在", fullName));
+           // jcFieldAccess.log.error(jcFieldAccess.nameToken  , String.format("类型'%s'不存在", fullName));
+            jcFieldAccess.log.error(jcFieldAccess.nameToken  , CompileMessagesUtil.TypeNotFound,fullName);
             jcFieldAccess.symbol = new BErroneousSymbol();
         }
         else
@@ -68,11 +39,11 @@ public class SearchSymbol {
             jcIdent.symbol= typeSymbols.get(0);
         }
         else if (typeSymbols.size() == 0) {
-            jcIdent.error(String.format("找不到类型'%s'",typeName));
+            jcIdent.error(CompileMessagesUtil.SymbolNotFound ,typeName);//   jcIdent.error(String.format("找不到类型'%s'",typeName));
             jcIdent.symbol= new BErroneousSymbol();
         }
         else {
-            jcIdent.error(String.format("对'%s'的引用不明确",typeName));
+            jcIdent.error( CompileMessagesUtil.SymbolAmbiguity,typeName);//  jcIdent.error(String.format("对'%s'的引用不明确",typeName));
             jcIdent.symbol= new BErroneousSymbol();
         }
         return jcIdent.symbol.getTypeSymbol();

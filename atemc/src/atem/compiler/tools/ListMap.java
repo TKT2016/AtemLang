@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class ListMap<V>
 {
-    //HashMap<K,V> map ;
     HashMap<String,V> nameMap ;
     HashMap<V,Integer> indexMap ;
     ArrayList<V> list;

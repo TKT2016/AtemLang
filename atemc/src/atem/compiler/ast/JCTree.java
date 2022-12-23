@@ -7,6 +7,7 @@ import atem.compiler.lex.Token;
 import atem.compiler.tools.IdGenerator;
 import atem.compiler.utils.Debuger;
 import atem.compiler.utils.SourceLog;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 /** 抽象语法树父类 */
 public abstract class JCTree implements Cloneable
@@ -18,20 +19,45 @@ public abstract class JCTree implements Cloneable
     /** 报错器 */
     public SourceLog log;
     /** 用当前语法树的位置和行号以及代码加提示参数进行报错 */
+    public void error(String key)
+    {
+        String msgf = CompileMessagesUtil.getMsg(key);
+        String msg= String.format(msgf,this.toString());
+        log.error(posToken.pos,line,msg,this.toString().length());
+    }
+/*
     public void error(String msg)
     {
         log.error(posToken.pos,line,msg,this.toString().length());
     }
+    */
     /** 用当前语法树的位置和行号以及代码加格式化参数参数进行报错 */
+    public void error(String key,String msgContent)
+    {
+        error(posToken,key,msgContent);
+       /* String msgf = CompileMessagesUtil.getMsg(key);
+        String msg= String.format(msgf,msgContent);
+        log.error(posToken.pos,line,msg,msgContent.length());*/
+    }
+    /*
     public void error(String formatter,String key)
     {
         log.error(posToken.pos,line,String.format(formatter,key),key.length());
-    }
+    }*/
     /** 用某词法标记的信息以及提示进行报错 */
-    public void error(Token token, String formatter,String key)
+    public void error(Token token,  String key,String msgContent)
     {
-        log.error(token,String.format(formatter,key));
+        //log.error(token,String.format(formatter,key));
+      //  String msgf = CompileMessagesUtil.getMsg(key);
+        //String msg= String.format(msgf,msgContent);
+        log.error(token,key,msgContent);
     }
+
+   /* public void error(Token token, String formatter,String key)
+    {
+        //log.error(token,String.format(formatter,key));
+        log.error(token,formatter,key);
+    }*/
 
     final String _treeId ;
     protected JCTree()
@@ -67,15 +93,6 @@ public abstract class JCTree implements Cloneable
 
     public void  isAnalyzered(boolean v)
     {
-       // if(this.toString().startsWith("fun1"))
-       //     Debuger.outln("75 isAnalyzered:"+this);
       propertys. _isAnalyzered =v;
     }
-
-/*
-    public boolean isAnalyzered( )
-    {
-        return  _isAnalyzered;
-    }
-    */
 }

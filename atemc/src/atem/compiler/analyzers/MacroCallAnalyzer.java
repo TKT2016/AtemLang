@@ -8,6 +8,7 @@ import atem.compiler.symbols.RClassSymbolManager;
 import atem.compiler.symbols.RMethodSymbol;
 import atem.compiler.symbols.Symbol;
 import atem.compiler.utils.Debuger;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 
@@ -33,9 +34,7 @@ public class MacroCallAnalyzer {
             }
             else if (macroDecls.size()>0)
             {
-                //var macroDecl = macroDecls.get(0);
-                //macroCall.targetMacro = macroDecl;
-                macroCall.error("不确定的macro调用");
+                macroCall.error(CompileMessagesUtil.MacroInvocationAmbiguity);//macroCall.error("不确定的macro调用");
                 return macroCall;
             }
         }
@@ -62,10 +61,9 @@ public class MacroCallAnalyzer {
              || methodInvocation.methodExpr instanceof JCFieldAccess
         )
         )*/
-        if(methodInvocation.methodExpr instanceof JCLiteral
-        )
+        if(methodInvocation.methodExpr instanceof JCLiteral)
         {
-            first.error("函数调用的方法错误");
+            first.error(CompileMessagesUtil.FunctionInvocationError);// first.error("函数调用的方法错误");
         }
         JCExpression[] args = new JCExpression[macroCall.getItems().length-1];
         for(int i = 1; i< macroCall.getItems().length; i++)
@@ -76,8 +74,6 @@ public class MacroCallAnalyzer {
         methodInvocation.setArgs( args);
         methodInvocation.symbol = RClassSymbolManager.ObjectSymbol;
 
-      //  if(methodInvocation.methodExpr.toString().endsWith(".setBounds"))
-      //      Debuger.outln("67 anlyzeAsMethodInvocation:"+methodInvocation);
         return (JCExpression) translator.translateMethodInvocation(methodInvocation,arg);
     }
 
@@ -94,7 +90,7 @@ public class MacroCallAnalyzer {
                 var np =   translator.translate(jcExpression,arg);
                 if(TreeeUtil.isEmptyParens(np))
                 {
-                    np.error("宏调用的括号表达式内不能为空");
+                    np.error(CompileMessagesUtil.BRACEMissingExperssion);//   np.error("宏调用的括号表达式内不能为空");
                 }
                 np.setIsMacroCallArg(true);
                 jcMacroCall.getItems()[i] = np;

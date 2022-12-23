@@ -14,6 +14,8 @@ import atem.compiler.ast.JCMacroCall;
 import atem.compiler.utils.CompileError;
 import atem.compiler.utils.Debuger;
 import atem.compiler.utils.SourceLog;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
+
 import java.util.ArrayList;
 import static atem.compiler.lex.TokenKind.*;
 
@@ -140,7 +142,7 @@ public class Parser {
         accept(TokenKind.SEMI);
         if(packageName==null)
         {
-            log.error(posToken,"package缺少名称");
+            log.error(posToken, CompileMessagesUtil.PackageMissingName,"");//   log.error(posToken,"package缺少名称");
             return null ;
         }
         else {
@@ -183,7 +185,7 @@ public class Parser {
         if(iexp instanceof JCFieldAccess)
             pid = (JCFieldAccess)iexp;
         else
-            error(posToken,"导入的不是正确的类型");
+            error(posToken,CompileMessagesUtil.ImportIllegalType,"");//  error(posToken,"导入的不是正确的类型");
         /* /验证末尾是否是分号 */
         accept(TokenKind.SEMI);
         return maker.at(posToken).Import(pid);
@@ -200,7 +202,7 @@ public class Parser {
         if(iexp instanceof JCFieldAccess)
             pid = (JCFieldAccess)iexp;
         else
-            error(posToken,"导入的不是正确的类型");
+            error(posToken,CompileMessagesUtil.ImportIllegalType,"");//error(posToken,"导入的不是正确的类型");
         /* /验证末尾是否是分号 */
         accept(TokenKind.SEMI);
         return maker.at(posToken).Require(pid);
@@ -288,11 +290,11 @@ public class Parser {
                 nextToken(); //跳过无意义的分号
                 return parseStatement();
             case ELSE:
-                log.error( token,"ELSE缺少IF" );
+                log.error( token,CompileMessagesUtil.ElseMissingIf,"" );//  log.error( token,"ELSE缺少IF" );
                 nextToken();
                 return parseStatement();
             case RBRACE:
-                log.error( token,"右大括号没有匹配的左大括号" );
+                log.error( token,CompileMessagesUtil.RBRACEMissingLBRACE,"" );//   log.error( token,"右大括号没有匹配的左大括号" );
                 nextToken();
                 return parseStatement();
             case RETURN:
@@ -315,7 +317,7 @@ public class Parser {
                 return null;
             default:
                 /* 错误处理 */
-                log.error( token,"非法的表达式语句成分" );
+                log.error( token,CompileMessagesUtil.IllegalExpressionStatementElement,"" );//  log.error( token,"非法的表达式语句成分" );
                 nextToken();
                 return parseStatement();
         }
@@ -459,7 +461,7 @@ public class Parser {
             return statement;
         }
         else {
-            error(posToken, "不是正确的表达式语句");
+            error(posToken, CompileMessagesUtil.IllegalExpressionStatementElement,"");  //error(posToken, "不是正确的表达式语句");
             return null;
         }
     }
@@ -629,13 +631,13 @@ public class Parser {
                 expr = getExprParser ().parseIdent();
                 break;
             case COMMA:
-                error(posToken,"多余的逗号");
+                error(token, CompileMessagesUtil.RedundantCommaSymbols,"");// error(posToken,"多余的逗号");
                 return null;
             case SEMI:
-                error(posToken,"多余的分号");
+                error(token, CompileMessagesUtil.RedundantSemiSymbols,"");// error(posToken,"多余的分号");
                 return null;
             default:
-                error(posToken,"非法的类型");
+                error(posToken,CompileMessagesUtil.IllegalType,"");//    error(posToken,"非法的类型");
                 nextToken();
                 return null;
         }
@@ -661,7 +663,7 @@ public class Parser {
             return tmpToken;
         }
         else {
-            error(token,"不是标识符" );
+            error(token, CompileMessagesUtil.ExpectIdent,"");//error(token,"不是标识符" );
             return null;
         }
     }
@@ -714,7 +716,7 @@ public class Parser {
                 if (argExpr != null)
                     args.add(argExpr);
                 else
-                    error(commaToken,"多余的逗号");
+                    error(commaToken, CompileMessagesUtil.RedundantCommaSymbols,"");//error(commaToken,"多余的逗号");
             }
         }
         accept(RPAREN);
@@ -726,19 +728,28 @@ public class Parser {
             nextToken();
         else
         {
-            String msg;
+            //String msg;
             if (tk.name != null)
-                msg = "期望是 '" + tk.name + "' ";
+            {
+                //msg = "期望是 '" + tk.name + "' ";
+                log.error(token,CompileMessagesUtil.ExpectFor, tk.name);
+            }
             else if (tk == TokenKind.IDENTIFIER)
-                msg ="期望是<标识符>";
+            {
+               // msg ="期望是<标识符>";
+                log.error(token,CompileMessagesUtil.ExpectIdent,"");
+            }
             else
-                msg ="期望是<" + tk + ">";
-            log.error(token,msg);
+            {
+                log.error(token,CompileMessagesUtil.ExpectFor, "<" + tk + ">");
+            }
+                //msg ="期望是<" + tk + ">";
+           // log.error(token,msg);
         }
     }
 
-    void error(Token posToken,String msg)
+    void error(Token posToken,String key, String msg)
     {
-        this.log.error(posToken,msg);
+        this.log.error(posToken,key,msg);
     }
 }

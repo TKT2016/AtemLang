@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>AtemIDE</groupId>
-  <artifactId>org.atem.ide</artifactId>
+  <artifactId>AtemIDE</artifactId>
   <version>0.6</version>
   <name>atemide</name>
 

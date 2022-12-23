@@ -12,6 +12,7 @@ import atem.compiler.ast.*;
 import atem.compiler.ast.callables.JCMacroDecl;
 import atem.compiler.CompileContext;
 import atem.compiler.utils.CompileError;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 
@@ -156,58 +157,6 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
         return tree;
     }
 
-    /**分析参数并且返回这些参数的类型符号列表  */
-    /*private BTypeSymbol[] attrArgs(JCExpression[] args, BodyContext context)
-    {
-        BTypeSymbol[] argTypes =new BTypeSymbol[args.length];
-        int i=0;
-        for (JCExpression item : args)
-        {
-            if(TreeeUtil.isEmptyParens(item))
-            {
-                if(args.length!=1)
-                {
-                    item.error("空参数'%s'只能有一个", item.toString());
-                    item.symbol = new BErroneousSymbol();
-                }
-                continue;
-            }
-            BodyContext argContext = context.copy( new SearchKinds());
-            JCExpression newExpr = translate(item, argContext);
-            if( newExpr.symbol instanceof BErroneousSymbol)
-            {
-                return  null;
-            }
-            else if(newExpr.symbol instanceof BMultiSymbol)
-            {
-                BMultiSymbol multiSymbol=(BMultiSymbol)newExpr.symbol;
-                var methodSymbol =multiSymbol.filterByArgCount(args.length);
-                if(methodSymbol!=null)
-                {
-                    newExpr.symbol = methodSymbol;
-                }
-                else {
-                    item.error("有歧义的多个符号'%s'", item.toString());
-                    return null;
-                }
-            }
-            if(item.symbol==null)
-            {
-                item.symbol = new BErroneousSymbol();
-                //throw new CompileError();
-            }
-            BTypeSymbol argTypeSymbol = item.symbol.getTypeSymbol();
-            if(SymbolUtil.isVoid(argTypeSymbol))
-            {
-                item.error("没有返回值'%s'", item.toString());
-                return  null;
-            }
-            argTypes[i]=argTypeSymbol;
-            i++;
-        }
-        return argTypes;
-    }*/
-
     public JCTree translatePackage(JCPackage tree, BodyContext arg)
     {
         return tree;
@@ -253,7 +202,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
         else if(selectedSymbol instanceof BMultiSymbol)
         {
             /* 3: 类型是BManySymbol,说明有多个类型，无法唯一确定，导致程序有歧义 */
-            tree.error( nameToken , "有歧义的多个符号'%s'", nameToken.identName);
+            tree.error( nameToken , CompileMessagesUtil.SymbolAmbiguity, nameToken.identName);//  tree.error( nameToken , "有歧义的多个符号'%s'", nameToken.identName);
             tree.symbol= new BErroneousSymbol();
         }
         else {
@@ -309,7 +258,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
 
             if(symbols2.size()==0)
             {
-                tree.error(nameToken, "'%s'静态修饰符不同",memberName);
+                tree.error(nameToken, CompileMessagesUtil.ModifierStaticError ,memberName);//  tree.error(nameToken, "'%s'静态修饰符不同",memberName);
                 tree.symbol = new BErroneousSymbol();
             }
             else if(symbols2.size()==1)
@@ -394,7 +343,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
         {
             if(!(tree.left instanceof JCIdent))
             {
-                tree.error("动态类成员必须是ident标识");
+                tree.error(CompileMessagesUtil.DynamicMemberShouldBeIdent);// tree.error("动态类成员必须是ident标识");
             }
         }
         else if(tree.arrayLiteral!=null)
@@ -443,7 +392,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
             }
             else
             {
-                tree.error(tree.nameToken, "'%s'只能在Lambda内声明使用", "$变量");
+                tree.error(tree.nameToken, CompileMessagesUtil.ParameterDollarMustInLambda, "$");//  tree.error(tree.nameToken, "'%s'只能在Lambda内声明使用", "$变量");
             }
         }
         else
@@ -465,7 +414,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
                     tree.isTypeName = true;
             }
             else if (symbols.size() == 0) {
-                tree.error(tree.nameToken, "找不到变量'%s'", varName);
+                tree.error(tree.nameToken, CompileMessagesUtil.SymbolNotFound , varName);//   tree.error(tree.nameToken, "找不到变量'%s'", varName);
                 tree.symbol = new BErroneousSymbol();
             }
             else {
@@ -491,7 +440,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
                          return tree;
                      }
                 }
-                tree.error(tree.nameToken, "变量'%s'不明确", varName);
+                tree.error(tree.nameToken, CompileMessagesUtil.SymbolAmbiguity, varName);//   tree.error(tree.nameToken, "变量'%s'不明确", varName);
                 tree.symbol = new BErroneousSymbol();
                 //BManySymbol moreSym = new BManySymbol(varName, symbols);
                 // tree.symbol = moreSym;
@@ -525,11 +474,11 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
         TokenKind opcode= tree.opcode;
         /* 检查条件表达式的结果是不是boolean类型 */
         if(opcode== TokenKind.NOT && !AnalyzerUtil.isBoolean(tree.expr)) {
-            tree.expr.error("不兼容的类型,无法转换为boolean");
+            tree.expr.error(CompileMessagesUtil.IncompatibleTypeBoolean); // tree.expr.error("不兼容的类型,无法转换为boolean");
             tree.symbol = RClassSymbolManager.booleanPrimitiveSymbol;
         }
         else if((opcode== TokenKind.SUB ||opcode== TokenKind.ADD) && !AnalyzerUtil.isInt(tree.expr)) {
-            tree.expr.error("不兼容的类型,无法转换为int");
+            tree.expr.error(CompileMessagesUtil.IncompatibleTypeInt); //  tree.expr.error("不兼容的类型,无法转换为int");
             tree.symbol = RClassSymbolManager.intPrimitiveSymbol;
         }
         else
@@ -543,7 +492,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
         {
             if(tree.expr!=null)
             {
-                tree.expr.error("Macro方法体中的return语句不能有返回值");
+                tree.expr.error(CompileMessagesUtil.MacroBodyNoReturn);//     tree.expr.error("Macro方法体中的return语句不能有返回值");
             }
         }
         tree.expr = translate(tree.expr, arg);
@@ -613,7 +562,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
                 tree.nameExpr.symbol = varSymbol;
             }
             else {
-                tree.error(tree.nameExpr.nameToken, "已经定义了变量 '%s'", varName);
+                tree.error(tree.nameExpr.nameToken, CompileMessagesUtil.ParameterDuplicated, varName);//    tree.error(tree.nameExpr.nameToken, "已经定义了变量 '%s'", varName);
                var  varSymbol = (BVarSymbol) symbols.get(0); //错误处理，取前面已经存在的变量符号
                 tree.nameExpr.symbol = varSymbol;
             }
@@ -634,16 +583,16 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
     {
         if(nameExpr.isThis)
         {
-            nameExpr.error("'%s'不能作为声明变量名称", CompilerConsts.Self);
+            nameExpr.error(  CompileMessagesUtil.VariableIllegalNameSelf, CompilerConsts.Self);// nameExpr.error("'%s'不能作为声明变量名称", CompilerConsts.Self);
             return false ;
         }
         else if(nameExpr.isTypeName)
         {
-            nameExpr.error("'%s'与静态类型名称相同,不能作为声明变量名称",nameExpr.getName());
+            nameExpr.error(CompileMessagesUtil.VariableIllegalNameDuplicated ,nameExpr.getName());// nameExpr.error("'%s'与静态类型名称相同,不能作为声明变量名称",nameExpr.getName());
         }
         else if(nameExpr.isDollarIdent)
         {
-            nameExpr.error("Lambda 内部参数'%s'不能作为声明变量名称",nameExpr.getName());
+            nameExpr.error(CompileMessagesUtil.VariableIllegalNameDollar,nameExpr.getName());//   nameExpr.error("Lambda 内部参数'%s'不能作为声明变量名称",nameExpr.getName());
         }
         return true;
     }
@@ -694,7 +643,7 @@ public class BodyAnalyzeTranslator extends TreeTranslator<BodyContext>
                 {
                     if(!(ele instanceof JCPair))
                     {
-                        ele.error("不是map项");
+                        ele.error(CompileMessagesUtil.PairIllegal);//       ele.error("不是map项");
                     }
                     else
                     {

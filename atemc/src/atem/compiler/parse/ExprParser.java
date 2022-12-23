@@ -5,6 +5,7 @@ import atem.compiler.lex.Token;
 import atem.compiler.lex.TokenKind;
 import atem.compiler.ast.*;
 import atem.compiler.tools.ListUtil;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -238,26 +239,26 @@ public class ExprParser {
                 return unary();
             case DOT:
             {
-                parser.error(parser.token,"'.'运算缺少左表达式");
+                parser.error(parser.token,CompileMessagesUtil.DotExperssionMissingLeft,"");// parser.error(parser.token,"'.'运算缺少左表达式");
                 parser.nextToken();
                 return parseHead();
             }
             case GT:case GTEQ:case LT:case LTEQ:case EQEQ:case NOTEQ:
             case MUL:case DIV:
             {
-                parser.error(parser.token,"运算缺少左表达式");
+                parser.error(parser.token,CompileMessagesUtil.BinaryLeftMissingExperssion,"");//  parser.error(parser.token,"运算缺少左表达式");
                 parser.nextToken();
                 return parseHead();
             }
             case COLON:
             {
-                parser.error(parser.token,"pair 缺少 key");
+                parser.error(parser.token,CompileMessagesUtil.PairMissingKey,"");//  parser.error(parser.token,"pair 缺少 key");
                 parser.nextToken();
                 return parseHead();
             }
             case EQ:
             {
-                parser.error(parser.token,"赋值缺少被赋值表达式");
+                parser.error(parser.token,CompileMessagesUtil.AssignRightMissingExperssion,"");//   parser.error(parser.token,"赋值缺少被赋值表达式");
                 parser.nextToken();
                 return parseHead();
             }
@@ -315,7 +316,7 @@ public class ExprParser {
         else
         {
             /* 错误处理 */
-            parser.  log.error(posToken,"期望标识符");
+            parser.  log.error(posToken, CompileMessagesUtil.ExpectIdent,"");//  parser.  log.error(posToken,"期望标识符");
             return null;
         }
     }
@@ -420,7 +421,7 @@ public class ExprParser {
                 if (argExpr != null)
                     args.add(argExpr);
                 else
-                    parser.error(commaToken,"多余的逗号");
+                    parser.error(parser.token, CompileMessagesUtil.RedundantCommaSymbols,"");// parser.error(commaToken,"多余的逗号");
             }
         }
         return args;
@@ -441,7 +442,7 @@ public class ExprParser {
                         || curkind==EOF
                 )
                     break;
-                parser.error(parser.token, "多余的分割符号");
+                parser.error(parser.token, CompileMessagesUtil.RedundantDivisionSymbols,"");//  parser.error(parser.token, "多余的分割符号");
                 parser.nextToken();
             }
             if(first)

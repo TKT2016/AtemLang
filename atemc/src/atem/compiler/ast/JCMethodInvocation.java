@@ -1,6 +1,7 @@
 package atem.compiler.ast;
 
 import atem.compiler.tools.ListUtil;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class JCMethodInvocation extends JCExpression
             for (var item : exprs) {
                 if(TreeeUtil.isEmptyParens(item))
                 {
-                    item.error("函数调用的括号表达式内不能为空");
+                    item.error(CompileMessagesUtil.BRACEMissingExperssion);//  item.error("函数调用的括号表达式内不能为空");
                 }
                 else
                     list.add(item);

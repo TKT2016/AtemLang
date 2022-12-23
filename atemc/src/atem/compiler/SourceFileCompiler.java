@@ -8,6 +8,7 @@ import atem.compiler.parse.Parser;
 import atem.compiler.utils.SourceLog;
 import atem.compiler.tools.FileUtil;
 import atem.compiler.ast.JCFileTree;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class SourceFileCompiler {
         File file = new File(inputFile);
          if(! file.exists())
          {
-             context.log.error(String.format("源文件不存在:%s",inputFile));
+             context.log.error(CompileMessagesUtil.SourceFileNotFound,inputFile);
              return context;
          }
 
@@ -73,7 +74,8 @@ public class SourceFileCompiler {
             return tree;
         }
         catch (IOException e) {
-            context.log.error("文件读取发生异常:" + file+":"+e.getMessage());
+           // context.log.error("文件读取发生异常:" + file+":"+e.getMessage());
+            context.log.error(CompileMessagesUtil.SourceFileReadError,  file+","+e.getMessage());
         }
         return null;
     }
@@ -84,7 +86,7 @@ public class SourceFileCompiler {
         if (context.errors==0)
             builder.append("0 error");
         else
-            builder.append("有"+context.errors +"个 errors");
+            builder.append(context.errors +" errors");
         context.log.response(builder.toString());
     }
 }

@@ -9,6 +9,7 @@ import atem.compiler.ast.callables.proc.ProcItemParameter;
 import atem.compiler.tools.runs.JarClassLoadUtil;
 import atem.compiler.CompileContext;
 import atem.compiler.utils.CompileError;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ import java.util.HashMap;
         /* 检查是否已经导入 */
         if(importTypes.containsKey(fullName))
         {
-            jcImport.log.error(jcImport.typeTree.nameToken  ,String.format("'%s'重复导入", fullName));
+            jcImport.log.error(jcImport.typeTree.nameToken , CompileMessagesUtil.TypeImporteDuplicated , fullName);//  jcImport.log.error(jcImport.typeTree.nameToken  ,String.format("'%s'重复导入", fullName));
             return;
         }
         else
@@ -105,14 +106,16 @@ import java.util.HashMap;
         /* 检查是否已经导入 */
         if(requireTypes.containsKey(fullName))
         {
-            jcRequire.log.error(jcRequire.typeTree.nameToken  ,String.format("'%s'重复导入", fullName));
+            jcRequire.log.error(jcRequire.typeTree.nameToken  ,CompileMessagesUtil.TypeImporteDuplicated, fullName);
+            //jcRequire.log.error(jcRequire.typeTree.nameToken  ,String.format("'%s'重复导入", fullName));
         }
         else
         {
             requireTypes.put(fullName,fullName);
              RClassSymbol classSymbol = RClassSymbolManager.forName(fullName,compileContext);
              if(classSymbol ==null) {
-                 jcRequire.log.error(jcRequire.typeTree.nameToken  , String.format("类型'%s'不存在", fullName));
+                 jcRequire.log.error(jcRequire.typeTree.nameToken  , CompileMessagesUtil.TypeNotFound, fullName);
+                 //  jcRequire.log.error(jcRequire.typeTree.nameToken  , String.format("类型'%s'不存在", fullName));
              }
              else
              {
@@ -126,7 +129,7 @@ import java.util.HashMap;
         String defineSign = tree.createMethodDefineValue();
         if(defedProcs.containsKey(defineSign))
         {
-            tree.error(tree.nameToken,"已经经定义了方法或函数 '%s'",tree.nameToken.identName);
+            tree.error(tree.posToken,CompileMessagesUtil.FunctionNameDuplicated,tree.nameToken.identName);// tree.error(tree.nameToken,"已经经定义了函数 '%s'",tree.nameToken.identName);
             return;
         }
         defedProcs.put(defineSign,tree);
@@ -140,7 +143,7 @@ import java.util.HashMap;
 
         if (!fileSymbol.addMethod(tree.methodSymbol))
         {
-            tree.error(tree.nameToken,"已经定义了方法 '%s'",tree.nameToken.identName);
+            tree.error(tree.posToken,CompileMessagesUtil.FunctionNameDuplicated,tree.nameToken.identName);//   tree.error(tree.nameToken,"已经定义了方法 '%s'",tree.nameToken.identName);
         }
         fileScope.addSymbol(tree.methodSymbol);
     }
@@ -151,7 +154,7 @@ import java.util.HashMap;
         String parameterName = tree.nameExpr.getName();
         if (methodSymbol.parametersMap.contains(parameterName))
         {
-            tree.error(tree.nameExpr.nameToken,"方法已经定义了参数 '%s'", parameterName);
+            tree.error(tree.nameExpr.nameToken,CompileMessagesUtil.ParameterDuplicated, parameterName);//    tree.error(tree.nameExpr.nameToken,"方法已经定义了参数 '%s'", parameterName);
             DVarSymbol paramSymbol = methodSymbol.parametersMap.get(parameterName);
             tree.symbol=paramSymbol;
         }
@@ -165,7 +168,7 @@ import java.util.HashMap;
         {
             jcFunction.isSelfFirst = true;
             if(index!=0)
-                tree.error(tree.nameExpr.nameToken," '%s' 参数应该放在第一个位置", CompilerConsts.Self);
+                tree.error(tree.nameExpr.nameToken,CompileMessagesUtil.ParameterSelfMustFirst, CompilerConsts.Self);//    tree.error(tree.nameExpr.nameToken,"'%s' 参数应该放在第一个位置", CompilerConsts.Self);
             else
                 methodSymbol.isSelfFirst =true;
         }
@@ -175,7 +178,7 @@ import java.util.HashMap;
         String defineSign = tree.createMacroAnnotationValue();
         if(defedProcs.containsKey(defineSign))
         {
-            tree.error(tree.posToken,"已经经定义了方法或函数 '%s'",defineSign);
+            tree.error(tree.posToken,CompileMessagesUtil.FunctionNameDuplicated,defineSign);//   tree.error(tree.posToken,"已经经定义了函数 '%s'",defineSign);
             return;
         }
         defedProcs.put(defineSign,tree);
@@ -193,7 +196,7 @@ import java.util.HashMap;
             throw new CompileError();
         if (methodSymbol.parametersMap.contains(parameterName))
         {
-            tree.error(tree.posToken ,"方法已经定义了参数 '%s'", parameterName);
+            tree.error(tree.posToken ,CompileMessagesUtil.ParameterDuplicated, parameterName);//   tree.error(tree.posToken ,"方法已经定义了参数 '%s'", parameterName);
             DVarSymbol paramSymbol = methodSymbol.parametersMap.get(parameterName);
             tree.symbol=paramSymbol;
         }
@@ -205,7 +208,7 @@ import java.util.HashMap;
 
         if(parameterName.equals(CompilerConsts.Self))
         {
-                tree.error("定义 macro的参数不能有'%s' ", CompilerConsts.Self);
+            tree.error(CompileMessagesUtil.ParameterMacroNotAllowSelf , CompilerConsts.Self);// tree.error("定义 macro的参数不能有'%s' ", CompilerConsts.Self);
         }
     }
 }

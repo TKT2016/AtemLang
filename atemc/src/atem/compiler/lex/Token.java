@@ -1,5 +1,7 @@
 package atem.compiler.lex;
 
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
+
 public class Token {
     /** 类型 */
     public final TokenKind kind;
@@ -59,7 +61,7 @@ public class Token {
     public String toString()
     {
         String str = getTextShow();
-        return str+" 第"+line+"行"+" "+ pos+":"+identName;
+        return str+"  "+line+ CompileMessagesUtil.getLineWord() +" "+ pos+":"+identName;
     }
 
     private String getTextShow()

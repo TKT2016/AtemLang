@@ -8,6 +8,7 @@ import atem.compiler.symbols.RClassSymbol;
 import atem.compiler.symbols.SymbolUtil;
 import atem.compiler.ast.*;
 import atem.compiler.utils.CompileError;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 public abstract class AnalyzerUtil {
 
@@ -145,7 +146,7 @@ public abstract class AnalyzerUtil {
     {
         if(tree== null) return;
         if(! isBoolean( tree))
-            tree.error("不兼容的类型,无法转换为boolean");
+            tree.error(CompileMessagesUtil.IncompatibleTypeBoolean);//    tree.error("不兼容的类型,无法转换为boolean");
     }
 
     public static  boolean isBoolean( JCTree tree)
@@ -178,7 +179,7 @@ public abstract class AnalyzerUtil {
         tree.symbol= RClassSymbolManager.intPrimitiveSymbol;
     }
 */
-
+/*
     public static boolean checkNumber(JCTree tree)
     {
         boolean b =false;
@@ -187,9 +188,10 @@ public abstract class AnalyzerUtil {
             b = SymbolUtil.isInt(((JCExpression)tree).symbol.getTypeSymbol());
         }
         if(!b)
-            tree.error("数据类型应该是数字");
+            tree.error(CompileMessagesUtil.IncompatibleTypeNumber);//  tree.error("数据类型应该是数字");
         return b;
     }
+    */
 /*
     public static Symbol findMemberSymbol(String name, BTypeSymbol typeSymbol)
     {
@@ -209,6 +211,7 @@ public abstract class AnalyzerUtil {
         }
     }
 */
+    /*
     public static boolean checkAssignable( JCExpression left,JCExpression right)
     {
         BTypeSymbol leftType = left.symbol.getTypeSymbol();
@@ -219,7 +222,7 @@ public abstract class AnalyzerUtil {
             right.error("类型无法赋值");
         }
         return assignable;
-    }
+    }*/
 
     public static boolean checkAssignable(BTypeSymbol leftType, BTypeSymbol rightType)
     {

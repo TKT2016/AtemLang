@@ -2,13 +2,16 @@ package atem.compiler;
 
 import atem.compiler.tools.FileUtil;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class TestStd {
 
     public static void main(String[] args)
     {
-        //args.getClass().getSimpleName()
-       // testone("\\others\\Test");
-       // testone("HelloWorld");
+        testone("\\others\\Test");
+
+        //testone("HelloWorld");
       //  testone("Literals");
         //testone("VarDim");
        // testone("Datatypes");
@@ -29,7 +32,7 @@ public class TestStd {
          //testone("Member1");
        // testone("CoreFns");
        // testone("\\others\\SimpleDialogs1");
-         testone("\\others\\TestJSoup");
+        // testone("\\others\\TestJSoup");
         //testone("\\others\\Swing1");
     }
 
@@ -38,11 +41,8 @@ public class TestStd {
         var curPath =FileUtil.getCurrentPath();
         String baseDir = curPath+"\\atemc\\examples\\stdsamples\\";
         String feoSrc=srcName;
-
         feoSrc+= CompilerConsts.ext;
-       // System.out.println(baseDir+feoSrc);
         CompileContext context = new CompileContext();
-        context.setLibPaths( new String[]{"D:\\WHZProjects\\JavaProjects\\AtemScript\\AtemIDE\\dlibjar\\"});
         context.setOutPath("out");
         context.sourcesFiles = new String[]{ baseDir+feoSrc};
         CompilerMain.compileRun( context ,false);

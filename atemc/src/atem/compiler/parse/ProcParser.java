@@ -7,6 +7,7 @@ import atem.compiler.ast.callables.JCMacroDecl;
 import atem.compiler.ast.callables.proc.ProcItem;
 import atem.compiler.ast.callables.proc.ProcItemParameter;
 import atem.compiler.ast.callables.proc.ProcItemText;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class ProcParser {
         parser.nextToken();
         if(parser.kind!= TokenKind.IDENTIFIER)
         {
-            parser.error(parser.token,"macro的第一项必须是标识符");
+            parser.error(parser.token,CompileMessagesUtil.MacroFirstMustBeIdent,"");//   parser.error(parser.token,"macro的第一项必须是标识符");
         }
         ArrayList<ProcItem> items = new ArrayList<>();
         while (parser.kind!=EOF)
@@ -52,7 +53,7 @@ public class ProcParser {
                 break;
             else
             {
-                parser.error(parser.token,"错误的宏定义");
+                parser.error(parser.token, CompileMessagesUtil.MacroIllegalDefined,"");// parser.error(parser.token,"错误的宏定义");
                 parser.nextToken();
             }
         }

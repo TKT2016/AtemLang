@@ -3,10 +3,10 @@ package atem.compiler.utils;
 import atem.compiler.CompileContext;
 import atem.compiler.lex.Token;
 import atem.compiler.tools.StringHelper;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 /* 源文件Log */
 public class SourceLog extends SimpleLog {
-    //public static final int NOPOS  = -1;
     public final String sourceFile;
     final String sourceCode;
 
@@ -20,13 +20,21 @@ public class SourceLog extends SimpleLog {
     public void error(int pos,int line, String msg ,int keywordSize)
     {
         context.errors++;
-        print(pos,line,msg,"错误",keywordSize);
+        print(pos,line,msg,CompileMessagesUtil.getErrorWord(),keywordSize);
     }
-
+/*
     public void error(Token token ,String msg )
     {
         context.errors++;
-        print(token.pos,token.line,msg,"错误",token.getSize());
+        print(token.pos,token.line,msg,CompileMessagesUtil.getErrorWord(),token.getSize());
+    }
+*/
+    public void error(Token token , String key, String msgContent )
+    {
+        context.errors++;
+        String msgf = CompileMessagesUtil.getMsg(key);
+        String msg= String.format(msgf,msgContent);
+        print(token.pos,token.line,msg,CompileMessagesUtil.getErrorWord(),token.getSize());
     }
 
     public void print(int pos,int line, String msg,String head,int keywordSize)
@@ -42,22 +50,9 @@ public class SourceLog extends SimpleLog {
         buff.append(head+" ");
         buff.append(sourceFile);
         buff.append(" ");
-        buff.append(line+"行 " );
-        buff.append(col+"列 : ");
+        buff.append(line+" "+ CompileMessagesUtil.getLineWord() );
+        buff.append(col+" "+ CompileMessagesUtil.getColumnWord()+" : ");
         buff.append(msg);
-        //buff.append("\n"+ lineCode +"\n");
-       /* for(int i=0;i<col;i++)
-        {
-            char ch = lineCode.charAt(i);
-            if(ch=='\t')
-                buff.append(ch);
-            else if(ch> 127)
-                buff.append("     ");
-            else
-                buff.append(" ");
-        }
-        // buff.append(" ^\n");
-        */
         buff.append("\n");
         for(int i=0;i<lineCode.length();i++)
         {
@@ -66,9 +61,7 @@ public class SourceLog extends SimpleLog {
             buff.append(ch);
             if(col  ==i -keywordSize+2) buff.append("\033[0m");
         }
-
         buff.append("\n");
         response(buff.toString());
     }
-
 }

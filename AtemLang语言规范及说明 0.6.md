@@ -1,8 +1,10 @@
 
 
-# AtemLang编程语言说明
+# AtemLang语言规范及说明
 
-AtemLang是运行在JVM平台上的半解释性的语言，它是动态的、灵活的、有趣的编程语言，易于调用java库，比Lisp使用起来更简单。它的名字来源 meta的倒叙。
+AtemLang是运行在JVM平台上的半解释性的语言，它是动态的、灵活的、有趣的编程语言，易于调用java库，比Lisp使用起来更简单。它的名字来源 meta的倒序。
+
+开源网址:https://github.com/TKT2016/AtemLang
 
 ## 例子 HelloWorld
 
@@ -110,7 +112,7 @@ require atem.lang.Core;
 
 ### 布尔（Boolean）
 
-对应32位整数(java.lang.Boolean)。
+对应boolean类型(java.lang.Boolean)。
 
 ```java  {.line-numbers}
 true
@@ -193,7 +195,7 @@ Atem的运算符只有加减乘除、比较运算符、逻辑运算符。
 | &#124;&#124;   | 或                       | 
 | !   | 非                        | 
 
-为了保存语言简洁，Atem语言中没有 ++ ，--， +=  等等这类运算符。
+为了保持语言简洁，Atem语言中没有 ++ ，--， +=  等等这类运算符。
 
 ```java  {.line-numbers}
 package examples.stdsamples;
@@ -235,8 +237,10 @@ println (b==null);
 
 ### 全局变量
 在源文件内函数外声明的变量是全局变量。
+
 ### 局部变量
-在 函数或宏内部声明的变量是局部变量，只能在这个函数或者宏内使用。
+在函数或宏内部声明的变量是局部变量，只能在这个函数或者宏内使用。
+
 ### 宏语句变量
 在宏调用语句内定义的变量是宏语句变量,变量只能由这个语句内的函数或者lambda表达式使用。
 
@@ -260,31 +264,31 @@ var ch = area.charAt(6);
 var str= "A\bB\fC\nD\rF\tE\\G\'H\"I\0JKL";
 println str;
 ```
-**转义符**
+**转义符表**
 | 转义字符 | 意义                                | ASCII码值（十进制） |
 | -------- | ----------------------------------- | ------------------- |
 | \b       | 退格(BS) ，将当前位置移到前一列     | 008                 |
 | \f       | 换页(FF)，将当前位置移到下页开头    | 012                 |
 | \n       | 换行(LF) ，将当前位置移到下一行开头 | 010                 |
 | \r       | 回车(CR) ，将当前位置移到本行开头   | 013                 |
-| \t       | 水平制表(HT) （跳到下一个TAB位置）  | 009                 |
+| \t       | 水平制表(HT) 跳到下一个TAB位置 | 009                 |
 | \\       | 代表一个反斜线字符''\'              | 092                 |
 | \'       | 代表一个单引号（撇号）字符          | 039                 |
 | \"       | 代表一个双引号字符                  | 034                 |
 | \0       | 空字符(NUL)                         | 000                 |
 
 **字符串长度**
-可以使用方法length 来计算字符串的长度：
+可以使用方法length 来计算字符串的长度。
 ```java  {.line-numbers}
 println (str.length ());
 ```
 
-## AtemObject对象
+## AtemObject类
 AtmeObject是atem相关类的基类，它只定义了一个只读的prototype。atem.lang包中的Dynamic、List都继承它。
 
 ## 语句
 
-语句用分号分隔结尾。
+语句用分号结尾。
 
 ```java  {.line-numbers}
 x = 5 + 6;
@@ -294,11 +298,11 @@ y = x * 10;
 ### 条件语句
 
 可使用如下条件语句：
-- 使用 `if` 来规定要执行的代码块，如果指定条件为 true
-- 使用 `else` 来规定要执行的代码块，如果相同的条件为 false
-- 使用 `else if` 来规定要测试的新条件，如果第一个条件为 false
+- 使用 `if` 来规定要执行的代码块，如果指定条件为 true;
+- 使用 `else` 来规定要执行的代码块，如果相同的条件为 false;
+- 使用 `else if` 来规定要测试的新条件，如果第一个条件为 false;
 
-注:Atem语言没有switch语句。
+注:AtemLang语言没有switch语句。
 
 ```java  {.line-numbers}
 package examples.stdsamples;
@@ -327,7 +331,7 @@ if (time < 10) {
 
 ### 循环语句
 
-Atem的循环语句只有while语句。
+AtemLang的循环语句只有while语句。
 
 #### While循环
 
@@ -345,7 +349,6 @@ while (i < 10) {
 #### forloop
 
 Core中定义forloop宏，模仿其它语言的for循环。
-
 使用格式是
 
 ```java  {.line-numbers}
@@ -382,7 +385,7 @@ forloop (var i=0) {i<8} {i=i+1}{
 };
 ```
 
-**注:** Atem语言里没有continue.
+**注:** AtemLang语言里没有continue.
 
 
 ## 类型与成员变量赋值
@@ -418,30 +421,28 @@ frame2.setDefaultCloseOperation WindowConstants.EXIT_ON_CLOSE;
 frame2.setVisible true;
 ```
 
-
-### 变量赋值类型名称
+### 变量赋值为类型
 
 ```java  {.line-numbers}
 var sys = System;
 println sys;
 ```
 
-### 变量赋值字段
+### 变量赋值为字段
 
 ```java  {.line-numbers}
 var err = sys.err;
 println err;
 ```
 
-### 变量赋值方法
+### 变量赋值为函数
 
 ```java  {.line-numbers}
 var errshow = err.println;
 println errshow;
 ```
 
-### 变量赋值构造函数
-
+### 变量赋值为构造函数
 构造函数是没有函数名称的，Atem语言用new来指示构造函数，用<类型名称>.new 来获取构造函数。
 
 ```java  {.line-numbers}
@@ -449,7 +450,6 @@ var newFrame = JFrame.new;
 ```
 
 ## 函数
-
 函数是由可重复使用的代码块。
 
 ### 函数定义
@@ -542,10 +542,10 @@ myFunction .( argument1 , argument2 ...)
 myFunction2.(3 ,4)
 ```
 
-您可以发送任意多的参数，由逗号 (,) 分隔：
-
+您可以传递任意多的参数，由逗号 (,) 分隔：
+```
 myFunction(*argument1,argument2*)
-
+```
 当您声明函数时，请把参数作为变量来声明：
 
 ```java  {.line-numbers}
@@ -855,6 +855,7 @@ finally 关键字用来创建在 try 代码块后面执行的代码块。
 finally 代码块出现在 catch 代码块最后。
 
 ## 其它重要方法
+### 这几个在Core类中。
 
 ```java  {.line-numbers}
 println  (  "STRING".getClass ()  );
@@ -870,7 +871,7 @@ println (isNotNull     "STRING"  );
 println  (  "STRING".getClass ()  );
 ```
 
-### 这几个在Core中
+
 
 ### isInstanceof 是否继承于
 和java关键字instanceof作用一致。
@@ -898,7 +899,7 @@ println (isNotNull "STRING");
 
 ## List
 
-数组是一种特殊的类型，它能够一次存放一个以上的值。
+列表是一种特殊的类型，它能够一次存放一个以上的值。
 
 ### 初始化列表
 
@@ -912,7 +913,7 @@ var cars = ["Saab", "Volvo", "BMW"];
 
 ### 通过索引号获取元素
 
-通过引用*索引号（下标号）*来引用某个数组元素，0对应列表中第一个，1对应列表中第二个，其它以此类推。
+通过引用*索引号*来引用某个数组元素，0对应列表中第一个，1对应列表中第二个，其它以此类推。
 
 ```java  {.line-numbers}
 println ( cars.get 0);

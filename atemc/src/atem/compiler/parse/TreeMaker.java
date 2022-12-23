@@ -17,6 +17,7 @@ import java.util.Stack;
 
 import atem.compiler.ast.JCTree;
 import atem.compiler.tools.StringHelper;
+import atem.compiler.utils.msgresources.CompileMessagesUtil;
 
 /** 抽象语法树工厂(包含检查树的完整性) */
 public class TreeMaker
@@ -57,11 +58,17 @@ public class TreeMaker
         //tree.pos = pos;
         tree.line = line;
     }
-
-    void error(String msg)
+/*
+    void error(String key, String msg)
     {
        // this.log.error(pos,line,msg,1);
-        this.log.error(posToken,msg);
+        this.log.error(posToken,key,msg);
+    }*/
+
+    void error(String key )
+    {
+        // this.log.error(pos,line,msg,1);
+        this.log.error(posToken,key,"");
     }
 
     /** 创建JCPackage */
@@ -78,7 +85,7 @@ public class TreeMaker
         boolean right= true;
         if(tree.packageName==null)
         {
-            error("定义 package缺少名称");
+            error(CompileMessagesUtil.PackageMissingName);// error("定义 package缺少名称");
             right = false;
         }
         return right;
@@ -136,7 +143,7 @@ public class TreeMaker
         boolean right= true;
         if(tree.typeTree ==null)
         {
-            error("import缺少类名称或包名称");
+            error(CompileMessagesUtil.RequireMissingName);//error("require缺少类名称或包名称");
             right = false;
         }
         return right;
@@ -147,7 +154,7 @@ public class TreeMaker
         boolean right= true;
         if(tree.typeTree ==null)
         {
-            error("import缺少类名称或包名称");
+            error(CompileMessagesUtil.ImportMissingName);//   error("import缺少类名称或包名称");
             right = false;
         }
         return right;
@@ -211,15 +218,15 @@ public class TreeMaker
            right =false;
         }*/
         if( tree.nameToken== null ||  StringHelper.isNullOrEmpty( tree.nameToken.identName)) {
-            error("函数名称不能为空");
+            error(CompileMessagesUtil.FunctionMissingName);//  error("函数名称不能为空");
             right =false;
         }
         if( tree.params== null ) {
-            error("函数缺少形参");
+            error(CompileMessagesUtil.FunctionMissingParameters);//  error("函数缺少形参");
             right =false;
         }
         if( tree.body== null ) {
-            error("缺少函数体");
+            error(CompileMessagesUtil.FunctionMissingBody);//  e   error("缺少函数体");
             right =false;
         }
         return right;
@@ -274,7 +281,7 @@ public class TreeMaker
         }*/
         if( tree.nameExpr ==null)
         {
-            error("变量缺少名称");
+            error(CompileMessagesUtil.VariableMissingName);//   error("变量缺少名称");
             right =false;
         }
         //if(isLocalVar && tree.init==null)
@@ -328,11 +335,11 @@ public class TreeMaker
     {
         boolean right =true;
         if(tree.cond==null) {
-            error("while循环语句缺少条件表达式");
+            error(CompileMessagesUtil.WhileLoopMissingCondition);//  error("while循环语句缺少条件表达式");
             right =false;
         }
         if(tree.body==null) {
-            error("while循环语句缺少循环体");
+            error(CompileMessagesUtil.WhileLoopMissingBody);//   error("while循环语句缺少循环体");
             right =false;
         }
         return right;
@@ -352,12 +359,12 @@ public class TreeMaker
     /** 创建JCIf */
     public JCIf If(JCExpression cond, JCStatement thenpart, JCStatement elsepart) {
         if(cond==null) {
-            error("if语句缺少条件表达式");
+            error(CompileMessagesUtil.IfMissingCondition);//  error("if语句缺少条件表达式");
             return null;
         }
         if(thenpart==null)
         {
-            error("if语句缺少执行语句");
+            error(CompileMessagesUtil.IfMissingBody);//  error("if语句缺少执行语句");
             return null;
         }
         JCIf tree = new JCIf();
@@ -373,12 +380,12 @@ public class TreeMaker
     {
         boolean right =true;
         if(tree.cond==null) {
-            error("if语句缺少条件表达式");
+            error(CompileMessagesUtil.IfMissingCondition);//     error("if语句缺少条件表达式");
             right =false;
         }
         if(tree.thenpart==null)
         {
-            error("if语句缺少执行语句");
+            error(CompileMessagesUtil.IfMissingBody);// error("if语句缺少执行语句");
             right =false;
         }
         return right;
@@ -398,7 +405,7 @@ public class TreeMaker
         boolean right =true;
         if(tree.expr==null)
         {
-            error("语句缺少表达式");
+            error(CompileMessagesUtil.StatementMissingExpression);//   error("语句缺少表达式");
             right =false;
         }
         return right;
@@ -474,7 +481,7 @@ public class TreeMaker
             }
             else
             {
-                element.error("动态变量的成员应该是名称键值对");
+                element.error(CompileMessagesUtil.DynamicMemberShouldBePair);//  element.error("动态变量的成员应该是名称键值对");
             }
         }
         return JCDynamicLiteral;
@@ -560,7 +567,7 @@ public class TreeMaker
         boolean right =true;
         if(tree.expr==null)
         {
-            error("括号内缺少表达式");
+            error(CompileMessagesUtil.BRACEMissingExperssion);//     error("括号内缺少表达式");
             right =false;
         }
         return right;
@@ -581,12 +588,12 @@ public class TreeMaker
         boolean right =true;
         if(tree.left==null)
         {
-            error("赋值语句左边缺少表达式");
+            error(CompileMessagesUtil.AssignLeftMissingExperssion);//    error("赋值语句左边缺少表达式");
             right =false;
         }
 
         if(tree.right ==null) {
-            error("赋值语句右边缺少表达式");
+            error(CompileMessagesUtil.AssignRightMissingExperssion);//   error("赋值语句右边缺少表达式");
             right =false;
         }
         return right;
@@ -607,13 +614,13 @@ public class TreeMaker
         TokenKind opcode = tree.opcode;
         if(!(opcode== TokenKind.ADD ||opcode== TokenKind.SUB ||opcode== TokenKind.NOT))
         {
-            error("单目表达式前缀只能为'+','-','!'");
+          error(CompileMessagesUtil.UnaryExpressionOpShouldBe);//  error("单目表达式前缀只能为'+','-','!'");
             right =false;
         }
 
         if( tree.expr==null)
         {
-            error("单目后边缺少表达式");
+            error(CompileMessagesUtil.UnaryExpressionRightMissingExperssion);//  error("单目后边缺少表达式");
             right =false;
         }
         return right;
@@ -649,12 +656,12 @@ public class TreeMaker
         boolean right =true;
         if( tree.left ==null)
         {
-            error("二元运算表达式左边缺少表达式");
+            error(CompileMessagesUtil.BinaryLeftMissingExperssion);//error("二元运算表达式左边缺少表达式");
             right =false;
         }
         if( tree.right ==null)
         {
-            error("二元运算表达式右边缺少表达式");
+            error(CompileMessagesUtil.BinaryRightMissingExperssion);//  error("二元运算表达式右边缺少表达式");
             right =false;
         }
         return right;
@@ -698,12 +705,12 @@ public class TreeMaker
     {
         boolean right =true;
         if(tree.selected ==null) {
-            error("缺少被限定名称");
+            error(CompileMessagesUtil.DotExperssionMissingName);//     error("缺少被限定名称");
             right =false;
         }
         if(tree.nameToken==null || StringHelper.isNullOrEmpty(tree.nameToken.identName))
         {
-            error("缺少限定名称");
+            error(CompileMessagesUtil.DotExperssionMissingName);//    error("缺少限定名称");
             right =false;
         }
         return right;
@@ -712,7 +719,7 @@ public class TreeMaker
     public JCIdent Ident(Token nameToken) {
         if(nameToken==null ||   StringHelper.isNullOrEmpty(nameToken.identName))
         {
-            error("标识符不能为空");
+            error(CompileMessagesUtil.IdentMissingName);//   error("标识符不能为空");
             return  null;
         }
         JCIdent tree = new JCIdent(nameToken);
@@ -725,7 +732,7 @@ public class TreeMaker
     {
         boolean right =true;
         if(tree.nameToken ==null ||   StringHelper.isNullOrEmpty(tree.nameToken.identName)) {
-            error("标识符不能为空");
+            error(CompileMessagesUtil.IdentMissingName);//   error("标识符不能为空");
             right =false;
         }
         return right;
